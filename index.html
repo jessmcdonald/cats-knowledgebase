@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <link rel="shortcut icon" href="img/icons/favicon.ico"/>
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+      <link href="https://fonts.googleapis.com/css?family=Fira+Code:400,600&display=swap" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="css/styles.css">
+      <title>AllTheCats</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <header class="page-header">
+        <div class="logo">
+          <img src="img/stanley.jpg" alt="image of a black cat named stanley sitting on a bed" class="page-header__item">
+        </div>
+        <div class="page-title">
+          <h1>
+            AllTheCats
+          </h1><br>
+          <h3>
+            Welcome to AllTheCats, a place for AllTheCats
+          </h3>
+        </div>
+      </header>
+
+      <div class="search-bar">
+        <input type="text" id=catBreedSearchInput onkeyup="catRepository.searchFunction()" placeholder="Search for a cat breed...">
+      </div>
+
+      <ul class="cat-list">
+      </ul>
+      <div id="modal-container"></div>
+  </body>
+    <script src="js/promise-polyfill.js"></script>
+    <script src="js/fetch.umd.js"></script>
+    <script src="js/scripts.js"></script>
+</html>
