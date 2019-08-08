@@ -258,7 +258,7 @@ document.querySelector('#modal-container').addEventListener("click", (e) => {
 
 catRepository.loadList().then(function() {
   // Now the data is loaded!
-  catRepository.getAll().forEach(function(ca){
+  catRepository.getAll().forEach(function(cat){
     catRepository.addListItem(cat);
   });
 });
