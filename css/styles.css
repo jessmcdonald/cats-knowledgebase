@@ -27,7 +27,7 @@
 }
 
 header .logo {
-  width: 30%;
+  width: 20%;
 }
 
 header .logo img {
@@ -36,12 +36,12 @@ header .logo img {
 }
 
 header .page-title {
-  width: 70%;
+  width: 80%;
 }
 
 body {
   background-color: var(--deepamethyst);
-  font-family: 'Fira Code', monospace;
+  font-family: 'Hind Siliguri', sans-serif;
   font-weight: var(--fontweight-regular);
   font-size: 16px;
   line-height: 1.6;
@@ -49,23 +49,23 @@ body {
 }
 
 h1 {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Hind Siliguri', sans-serif;
   font-size: 40px;
   margin-left: 30px;
 }
 
 h2 {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Hind Siliguri', sans-serif;
   font-size: 26px;
 }
 
 h3 {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: var(--fontweight-regular);
   font-size: 22px;
   line-height: 0px;
   margin-left: 30px;
-  margin-bottom: 0;
-}
+  }
 
 li {
   display: flex;
@@ -80,7 +80,7 @@ li {
 }
 
 .name-button {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Hind Siliguri', sans-serif;
   color: #fff;
   float: left;
   background-color: var(--pokemonblue);
@@ -98,7 +98,7 @@ li {
   }
 
 .name-button:hover {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Hind Siliguri', sans-serif;
   color: #fff;
   float: left;
   background-color: var(--pokemonblue);
@@ -148,7 +148,7 @@ li {
 }
 
 .pokemonmodal h1 {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Hind Siliguri', sans-serif;
   font-size: 30px;
   margin-left: 0px;
 }
