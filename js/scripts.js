@@ -112,7 +112,7 @@ function loadList() {
   return fetch(apiUrl).then(function (response) {
     return response.json();
   }).then(function (json) {
-    json.results.forEach(function (cat) {
+    json.forEach(function (cat) {
       var cat = {
         name: cat.name,
         temperament: cat.temperament,
