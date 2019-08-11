@@ -70,43 +70,48 @@ h3 {
 li {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: stretch;
   }
 
-.pokemon-list {
+.cat-list {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 .name-button {
   font-family: 'Hind Siliguri', sans-serif;
   color: #fff;
   float: left;
-  background-color: var(--pokemonblue);
+  background-color: var(--pearlaqua);
   border: 2px solid #fff;
   width: 200px;
+  height: 100px;
   font-size: 25px;
   padding: 18px 16px;
   border-radius: 6px;
   opacity: 0.9;
-  transition: 0.3s;
+  transition: 0.4s;
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
-  margin-bottom: 8px;
+  margin: 8px;
   }
 
 .name-button:hover {
   font-family: 'Hind Siliguri', sans-serif;
   color: #fff;
+  text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
   float: left;
-  background-color: var(--pokemonblue);
+  background-color: var(--jellybeanblue);
   border: 2px solid #fff;
   width: 200px;
   font-size: 25px;
   padding: 18px 16px;
-  border-radius: 18px;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   opacity: 1;
 }
@@ -135,8 +140,8 @@ li {
   text-align: center;
 }
 
-.pokemonmodal {
-  /* styling for actual pokemon info modal */
+.catmodal {
+  /* styling for actual cat info modal */
   margin: auto;
   display: inline-block;
   box-sizing: border-box;
@@ -147,18 +152,18 @@ li {
   text-align: left;
 }
 
-.pokemonmodal h1 {
+.catmodal h1 {
   font-family: 'Hind Siliguri', sans-serif;
   font-size: 30px;
   margin-left: 0px;
 }
 
-.pokemonmodal-close {
-  /* 'close' button within pokemon info modal */
+.catmodal-close {
+  /* 'close' button within cat info modal */
   float: right;
   -webkit-appearance: none;
   border: 0;
-  background: var(--jigglypufflightpink);
+  background: var(--cyclamen);
   color: 000;
   text-decoration: underline;
 }
@@ -170,9 +175,8 @@ li {
   width: 70%;
   font-size: 16px; /* Increase font-size */
   padding: 12px 20px 12px 40px; /* Add some padding */
-  border: 1px solid #ddd; /* Add a grey border */
+  border: 3px solid var(--keppel);
   margin-left: 15px;
   margin-bottom: 12px;
   margin-top: 12px;
-  /* Add some space below the input */
-}
+  }
