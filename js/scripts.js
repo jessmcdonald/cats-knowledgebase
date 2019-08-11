@@ -44,69 +44,6 @@ var catRepository = (function () {
     });
   }
 
-/*
-  function getPokemonHeight(pokemonHeight){
-    return (pokemonHeight > 20) ? (pokemonHeight / 10) + 'm (woah that\'s big!)<br>'
-         : (pokemonHeight < 10) ? (pokemonHeight / 10) + 'm (small one!)<br>'
-         :  (pokemonHeight / 10) + 'm<br>';
-    }
-  function getPokemonTypes(pokemonTypes){
-    let result = ''
-      if(pokemonTypes.includes('bug')){
-        result += '<img src="img/types/Bug.png">'
-      }
-      if(pokemonTypes.includes('dark')){
-        result += '<img src="img/types/Dark.png">'
-      }
-      if(pokemonTypes.includes('dragon')){
-        result += '<img src="img/types/Dragon.png">'
-      }
-      if(pokemonTypes.includes('electric')){
-        result += '<img src="img/types/Electric.png">'
-      }
-      if(pokemonTypes.includes('fairy')){
-        result += '<img src="img/types/Fairy.png">'
-      }
-      if(pokemonTypes.includes('fighting')){
-        result += '<img src="img/types/Fighting.png">'
-      }
-      if(pokemonTypes.includes('fire')){
-        result += '<img src="img/types/Fire.png">'
-      }
-      if(pokemonTypes.includes('ghost')){
-        result += '<img src="img/types/Ghost.png">'
-      }
-      if(pokemonTypes.includes('grass')){
-        result += '<img src="img/types/Grass.png">'
-      }
-      if(pokemonTypes.includes('ground')){
-        result += '<img src="img/types/Ground.png">'
-      }
-      if(pokemonTypes.includes('ice')){
-        result += '<img src="img/types/Ice.png">'
-      }
-      if(pokemonTypes.includes('normal')){
-        result += '<img src="img/types/Normal.png">'
-      }
-      if(pokemonTypes.includes('poison')){
-        result += '<img src="img/types/Poison.png">'
-      }
-      if(pokemonTypes.includes('psychic')){
-        result += '<img src="img/types/Psychic.png">'
-      }
-      if(pokemonTypes.includes('rock')){
-        result += '<img src="img/types/Rock.png">'
-      }
-      if(pokemonTypes.includes('steel')){
-        result += '<img src="img/types/Steel.png">'
-      }
-      if(pokemonTypes.includes('water')){
-        result += '<img src="img/types/Water.png">'
-      }
-        return result
-  }
-*/
-
 //fetch data from API
 function loadList() {
   return fetch(apiUrl).then(function (response) {
@@ -118,6 +55,7 @@ function loadList() {
         temperament: cat.temperament,
         origin: cat.origin,
         description: cat.description,
+        id: cat.id
         };
       //add data from api to repository
       add(cat);
@@ -126,31 +64,27 @@ function loadList() {
     console.error(e);
   })
 }
-/*
-//get pokemon details using Url from pokemon object in parameter
-function loadDetails(cat) {
-  var url = cat.detailsUrl;
+
+//get cat image URL using breed ID
+function loadImgUrl(cat) {
+  var url = `https://api.thecatapi.com/v1/images/search?breed_ids=${cat.id}`;
   return fetch(url).then(function (response) {
     return response.json();
   }).then(function (details) {
-    // now add the details to the item
-    //pokemon.imageUrl = details.sprites.front_default;
-    cat.height = details.height;
-    pokemon.types = [];
-          details.types.forEach(function(type) {
-            pokemon.types.push(type.type.name);
-          });
+    cat.imageUrl = details.url;
   }).catch(function (e) {
     console.error(e);
   });
 }
 
+
+
 // ~~~~~~~~~~~~~~~~~~~~~
-// pokemon info modal functions
+// cat info modal functions
 // ~~~~~~~~~~~~~~~~~~~~~
 
-//create pokemon info modal
-function showCatModal (pokemon) {
+//create cat info modal
+function showCatModal (cat) {
   var $catModalContainer = document.querySelector("#modal-container");
   //clear existing content
   $catModalContainer.innerHTML = "";
@@ -167,25 +101,24 @@ function showCatModal (pokemon) {
   nameElement.innerText = cat.name;
 
   var infoElement = document.createElement("p");
-  infoElement.innerHTML = `<b>Height:</b> ${catRepository.getPokemonHeight(pokemon.height)}
-  <br><b>Types:</b> ${pokemonRepository.getPokemonTypes(pokemon.types)}
-  <br><img src="${pokemon.imageUrl}">`;
+  infoElement.innerHTML =
+    `<b>Origin: </b>${cat.origin} <br> <b>Temperament</b> ${cat.temperament} <br> <b>Description: </b> ${cat.description} <br><img src="${cat.imageUrl}">`;
 
-  pokemonModal.appendChild(closeButtonElement);
-  pokemonModal.appendChild(nameElement);
-  pokemonModal.appendChild(infoElement);
-  $pokemonModalContainer.appendChild(pokemonModal);
+  catModal.appendChild(closeButtonElement);
+  catModal.appendChild(nameElement);
+  catModal.appendChild(infoElement);
+  $catModalContainer.appendChild(catModal);
 
-  $pokemonModalContainer.classList.add("is-visible");
+  $catModalContainer.classList.add("is-visible");
   }
 
-function hidePokemonModal () {
-  var $pokemonModalContainer = document.querySelector("#modal-container");
-  $pokemonModalContainer.classList.remove("is-visible");
+function hideCatModal () {
+  var $catModalContainer = document.querySelector("#modal-container");
+  $catModalContainer.classList.remove("is-visible");
 }
-*/
 
-//show pokemon info modal
+
+//show cat info modal
 function showDetails(cat) {
 catRepository
   .loadList(cat)
@@ -200,7 +133,7 @@ catRepository
 function searchFunction() {
   // Declare variables
   var input, filter, ul, li, a, i, txtValue;
-  input = document.getElementById("catSearchInput");
+  input = document.getElementById("catBreedSearchInput");
   filter = input.value.toUpperCase();
   ul = document.querySelector(".cat-list");
   li = ul.getElementsByTagName("li");
@@ -218,24 +151,21 @@ function searchFunction() {
   }
 }
 
-/*
-
 window.addEventListener("keydown", (e) => {
-  var $pokemonModalContainer = document.querySelector("#modal-container");
-  if (e.key === 'Escape' && $pokemonModalContainer.classList.contains("is-visible")){
-    hidePokemonModal();
+  var $catModalContainer = document.querySelector("#modal-container");
+  if (e.key === 'Escape' && $catModalContainer.classList.contains("is-visible")){
+    hideCatModal();
   }
 });
 
 document.querySelector('#modal-container').addEventListener("click", (e) => {
   var target = e.target;
-  var $pokemonModalContainer = document.querySelector("#modal-container");
-  if (target === $pokemonModalContainer) {
-    hidePokemonModal();
+  var $catModalContainer = document.querySelector("#modal-container");
+  if (target === $catModalContainer) {
+    hideCatModal();
   }
 });
 
-*/
 
   //public functions
   return {
@@ -243,15 +173,11 @@ document.querySelector('#modal-container').addEventListener("click", (e) => {
     getAll: getAll,
     addListItem: addListItem,
     loadList: loadList,
-    /*
-    loadDetails: loadDetails,
-    showDetails: showDetails,
-    showPokemonModal: showPokemonModal,
-    hidePokemonModal: hidePokemonModal,
     searchFunction: searchFunction,
-    getPokemonTypes: getPokemonTypes,
-    getPokemonHeight: getPokemonHeight,
-    */
+    loadImgUrl: loadImgUrl,
+    showDetails: showDetails,
+    showCatModal: showCatModal,
+    hideCatModal: hideCatModal,
   };
 })();
 
