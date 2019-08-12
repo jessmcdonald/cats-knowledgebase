@@ -77,8 +77,6 @@ function loadImgUrl(cat) {
   });
 }
 
-
-
 // ~~~~~~~~~~~~~~~~~~~~~
 // cat info modal functions
 // ~~~~~~~~~~~~~~~~~~~~~
