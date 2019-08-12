@@ -4,6 +4,47 @@ var catRepository = (function () {
   var cats = [];
   var apiUrl = 'https://api.thecatapi.com/v1/breeds';
 
+  //fetch data from API
+  function loadList() {
+    $.ajax({
+      dataType: 'json',
+      url: apiUrl,
+      success:  function(data) {
+        $.each(data.results, function(i, cat) {
+          var cat = {
+            name: cat.name,
+            temperament: cat.temperament,
+            origin: cat.origin,
+            description: cat.description,
+            id: cat.id
+          };
+        //add data from api to repository
+        add(cat);
+      });
+    },
+    error: function (e) {
+      console.error(e);
+    }
+  });
+  }
+
+
+
+  //get cat image URL using breed ID
+  function loadImgUrl(cat) {
+    var url = (`https://api.thecatapi.com/v1/images/search?breed_ids=${cat.id}`);
+    return fetch(url).then(function (response) {
+      return response.json();
+    }).then(function (details) {
+      cat.imageUrl = details.url;
+    }).catch(function (e) {
+      console.error(e);
+    });
+  }
+
+
+
+
   // ~~~~~~~~~~~~~~~~~~~~~
   // repository functions
   // ~~~~~~~~~~~~~~~~~~~~~
@@ -19,63 +60,18 @@ var catRepository = (function () {
   function addListItem(cat) {
 
     //select already existing element
-    var $newList = document.querySelector(".cat-list");
+    var $newList = $(".cat-list");
 
-    //create li
-    var $listItem = document.createElement("li");
+    //create li, add button with class name-button, add cat.name to button text, append listItem to newList
+    var $listItem = $('<button class="name-button"></button>');
+      $listItem.text(cat.name);
+      $($newList).append($listItem);
 
-    //create a button
-    var $button = document.createElement("button");
-
-    //append list to $newList
-    $newList.appendChild($listItem);
-
-    //add text to button
-    $button.innerText = cat.name;
-
-    //append button to list
-    $listItem.appendChild($button);
-
-    //add class to button
-    $button.classList.add("name-button");
-
-    //add event listener to list
-    $button.addEventListener('click', function(event) {showDetails(cat);
+    //add event listener to listItem
+    $listItem.on('click', function(event) {showDetails(cat);
     });
   }
 
-//fetch data from API
-function loadList() {
-  return fetch(apiUrl).then(function (response) {
-    return response.json();
-  }).then(function (json) {
-    json.forEach(function (cat) {
-      var cat = {
-        name: cat.name,
-        temperament: cat.temperament,
-        origin: cat.origin,
-        description: cat.description,
-        id: cat.id
-        };
-      //add data from api to repository
-      add(cat);
-    });
-  }).catch(function (e) {
-    console.error(e);
-  })
-}
-
-//get cat image URL using breed ID
-function loadImgUrl(cat) {
-  var url = `https://api.thecatapi.com/v1/images/search?breed_ids=${cat.id}`;
-  return fetch(url).then(function (response) {
-    return response.json();
-  }).then(function (details) {
-    cat.imageUrl = details.url;
-  }).catch(function (e) {
-    console.error(e);
-  });
-}
 
 // ~~~~~~~~~~~~~~~~~~~~~
 // cat info modal functions
@@ -83,36 +79,37 @@ function loadImgUrl(cat) {
 
 //create cat info modal
 function showCatModal (cat) {
-  var $catModalContainer = document.querySelector("#modal-container");
+  var $catModalContainer = $("#modal-container");
+  $catModalContainer.addClass("is-visible");
+
   //clear existing content
-  $catModalContainer.innerHTML = "";
-  // create modal div and assign class
-  var catModal = document.createElement("div");
-  catModal.classList.add("catmodal")
+  $($catModalContainer).empty();
 
-  var closeButtonElement = document.createElement("button");
-  closeButtonElement.classList.add("catmodal-close");
-  closeButtonElement.innerText = "Close";
-  closeButtonElement.addEventListener("click", hideCatModal);
+  // create modal div, assign class catmodal, append to catModalContainer
+  var $catModal = $('<div class="catmodal">');
+    $($catModalContainer).append($catModal);
 
-  var nameElement = document.createElement("h1");
-  nameElement.innerText = cat.name;
+  // create closeModal button, assign class catmodal-close, append to catModal
+  var $closeButtonElement = $('<button class="catmodal-close">Close</button>');
+    $($catModal).append($closeButtonElement);
+    $closeButtonElement.on('click', function(event) {hideCatModal()
+    });
 
-  var infoElement = document.createElement("p");
-  infoElement.innerHTML =
-    `<b>Origin: </b>${cat.origin} <br> <b>Temperament</b> ${cat.temperament} <br> <b>Description: </b> ${cat.description} <br><img src="${cat.imageUrl}">`;
+  //create title element on modal, append to catModal
+  var $nameElement = $('<h1></h1>');
+  $nameElement.text(cat.name);
+  $($catModal).append($nameElement);
 
-  catModal.appendChild(closeButtonElement);
-  catModal.appendChild(nameElement);
-  catModal.appendChild(infoElement);
-  $catModalContainer.appendChild(catModal);
-
-  $catModalContainer.classList.add("is-visible");
+  // create content element on modal, append to catModal
+  var $infoElement = $('<p></p>');
+  $infoElement.append(`<b>Origin: </b> ${cat.origin} <br> <b>Temperament</b> ${cat.temperament} <br> <b>Description: </b> ${cat.description} <br><img src=" ${cat.imageUrl} ">`);
+  $($catModal).append($infoElement);
   }
 
+
 function hideCatModal () {
-  var $catModalContainer = document.querySelector("#modal-container");
-  $catModalContainer.classList.remove("is-visible");
+  var $catModalContainer = $("#modal-container");
+  $catModalContainer.removeClass("is-visible");
 }
 
 
@@ -125,9 +122,11 @@ catRepository
 });
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~
+// cat info modal functions
+// ~~~~~~~~~~~~~~~~~~~~~
 
-
-//search bar function
+//search
 function searchFunction() {
   // Declare variables
   var input, filter, ul, li, a, i, txtValue;
@@ -149,16 +148,16 @@ function searchFunction() {
   }
 }
 
-window.addEventListener("keydown", (e) => {
-  var $catModalContainer = document.querySelector("#modal-container");
+$('window').on("keydown", (e) => {
+  var $catModalContainer = $("#modal-container");
   if (e.key === 'Escape' && $catModalContainer.classList.contains("is-visible")){
     hideCatModal();
   }
 });
 
-document.querySelector('#modal-container').addEventListener("click", (e) => {
+$('#modal-container').on("click", (e) => {
   var target = e.target;
-  var $catModalContainer = document.querySelector("#modal-container");
+  var $catModalContainer = $("#modal-container");
   if (target === $catModalContainer) {
     hideCatModal();
   }
