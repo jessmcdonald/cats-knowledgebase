@@ -1,5 +1,6 @@
 :root {
   --deepamethyst: #9D7AA4;
+  --amethystsmoke: #b398b9;
   --vodka: #BFBFEC;
   --toolbox: #7C6EBB;
 
@@ -36,7 +37,7 @@
   padding: 15px 5px 15px 5px;
   width: 90%;
   margin: 20px;
-  background-color: var(--vodka);
+  background-color: var(--amethystsmoke);
   border: 2px solid #fff;
 }
 
