@@ -9,19 +9,28 @@ var catRepository = (function () {
     return $.ajax({
       dataType: 'json',
       url: apiUrl,
+      headers: {
+        "x-api-key" : "00f17009-223f-4ff6-ae8f-d9fb84f6ca88"
+      },
       success:  function(data) {
         $.each(data, function(i, cat) {
-          var cat = {
-            name: cat.name,
-            temperament: cat.temperament,
-            origin: cat.origin,
-            description: cat.description,
-            id: cat.id
+
+          var catList = {}
+            //loadImgUrl(cat.id).then(function(cats) {
+              catList = {
+                name: cat.name,
+                temperament: cat.temperament,
+                origin: cat.origin,
+                description: cat.description,
+                id: cat.id,
+                //image: cats
           };
+
         //add data from api to repository
-        add(cat);
-      });
-    },
+        add(catList);
+      //}).catch(er => console.log(er))
+    });
+  },
     error: function (e) {
       console.error(e);
     }
@@ -29,10 +38,26 @@ var catRepository = (function () {
   }
 
 
+  //get cat image URL using breed ID
+  function loadImgUrl(cat) {
+      var url = (`https://api.thecatapi.com/v1/images/search?breed_ids=${cat}`);
+      return fetch(url).then(function (response) {
+        return response.json();
+      }).then(function (details) {
+        // console.log(details)
+        return details[0].url //i return only the url, [0] because there is only one in the array
+          //cat.imageUrl = details.url;
+      }).catch(function (e) {
+        console.error(e);
+      });
+    }
+
+/*
+
 
   //get cat image URL using breed ID
   function loadImgUrl(cat) {
-    var url = (`https://api.thecatapi.com/v1/images/search?breed_ids=${breed.id}`);
+    var url = (`https://api.thecatapi.com/v1/images/search?breed_ids=${cat.id}`);
     return fetch(url).then(function (response) {
       return response.json();
     }).then(function (details) {
@@ -42,7 +67,7 @@ var catRepository = (function () {
     });
   }
 
-
+*/
 
 
   // ~~~~~~~~~~~~~~~~~~~~~
@@ -101,10 +126,12 @@ function showCatModal (cat) {
   $($catModal).append($nameElement);
 
   // create content element on modal, append to catModal
+loadImgUrl(cat.id).then((f)=> {
   var $infoElement = $('<p></p>');
-  $infoElement.append(`<b>Origin: </b> ${cat.origin} <br> <b>Temperament</b> ${cat.temperament} <br> <b>Description: </b> ${cat.description} <br><img src=" ${cat.imageUrl} ">`);
+  $infoElement.append(`<b>Origin: </b> ${cat.origin} <br> <b>Temperament</b> ${cat.temperament} <br> <b>Description: </b> ${cat.description} <br><img src="${f}" width="400">`);
   $($catModal).append($infoElement);
-  }
+})
+}
 
 
 function hideCatModal () {
