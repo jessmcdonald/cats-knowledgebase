@@ -52,23 +52,6 @@ var catRepository = (function () {
       });
     }
 
-/*
-
-
-  //get cat image URL using breed ID
-  function loadImgUrl(cat) {
-    var url = (`https://api.thecatapi.com/v1/images/search?breed_ids=${cat.id}`);
-    return fetch(url).then(function (response) {
-      return response.json();
-    }).then(function (details) {
-      cat.imageUrl = details.url;
-    }).catch(function (e) {
-      console.error(e);
-    });
-  }
-
-*/
-
 
   // ~~~~~~~~~~~~~~~~~~~~~
   // repository functions
@@ -150,7 +133,7 @@ catRepository
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~
-// cat info modal functions
+// search functions
 // ~~~~~~~~~~~~~~~~~~~~~
 
 //search
@@ -174,6 +157,10 @@ function searchFunction() {
     }
   }
 }
+
+// ~~~~~~~~~~~~~~~~~~~~~
+// close modal
+// ~~~~~~~~~~~~~~~~~~~~~
 
 $('window').on("keydown", (e) => {
   var $catModalContainer = $("#modal-container");
