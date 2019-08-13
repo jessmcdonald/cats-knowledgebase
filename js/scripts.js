@@ -70,13 +70,17 @@ var catRepository = (function () {
     //select already existing element
     var $newList = $(".cat-list");
 
-    //create li, add button with class name-button, add cat.name to button text, append listItem to newList
-    var $listItem = $('<button class="name-button"></button>');
-      $listItem.text(cat.name);
+    //create li, append listItem to newList
+    var $listItem = $('<li></li>');
       $($newList).append($listItem);
 
+    //create button with class name-button, add cat.name to button text, append button to li
+    var $button = $('<button class="name-button"></button>');
+      $button.text(cat.name);
+      $($listItem).append($button);
+
     //add event listener to listItem
-    $listItem.on('click', function(event) {showDetails(cat);
+    $button.on('click', function(event) {showDetails(cat);
     });
   }
 
