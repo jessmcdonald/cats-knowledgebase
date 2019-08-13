@@ -6,11 +6,11 @@ var catRepository = (function () {
 
   //fetch data from API
   function loadList() {
-    $.ajax({
+    return $.ajax({
       dataType: 'json',
       url: apiUrl,
       success:  function(data) {
-        $.each(data.results, function(i, cat) {
+        $.each(data, function(i, cat) {
           var cat = {
             name: cat.name,
             temperament: cat.temperament,
@@ -32,7 +32,7 @@ var catRepository = (function () {
 
   //get cat image URL using breed ID
   function loadImgUrl(cat) {
-    var url = (`https://api.thecatapi.com/v1/images/search?breed_ids=${cat.id}`);
+    var url = (`https://api.thecatapi.com/v1/images/search?breed_ids=${breed.id}`);
     return fetch(url).then(function (response) {
       return response.json();
     }).then(function (details) {
