@@ -75,7 +75,7 @@ var catRepository = (function () {
       $($newList).append($listItem);
 
     //create button with class name-button, add cat.name to button text, append button to li
-    var $button = $('<button class="name-button"></button>');
+    var $button = $('<button type="button" class="btn btn-primary"></button>');
       $button.text(cat.name);
       $($listItem).append($button);
 
@@ -163,8 +163,9 @@ function searchFunction() {
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~
-// close modal
+// close modal NEED TO FIX
 // ~~~~~~~~~~~~~~~~~~~~~
+
 
 $('window').on("keydown", (e) => {
   var $catModalContainer = $("#modal-container");
