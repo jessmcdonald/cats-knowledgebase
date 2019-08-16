@@ -89,7 +89,7 @@ var catRepository = (function () {
 function showDetails(cat) {
   $(document).on('click', '.list-group-item', function() {
     loadImgUrl(cat.id).then((f)=> {
-      var $nameElement = (`<h2><b>${cat.name}</b></h2>`);
+      var $nameElement = $(`<h2><b>${cat.name}</b></h2>`);
       var $detailsElement = $(`<b>Origin: </b> ${cat.origin} <br> <b>Temperament</b> ${cat.temperament} <br> <b>Description: </b> ${cat.description} <br>`);
       var $imageElement = $(`<img src="${f}" width="400">`);
 
