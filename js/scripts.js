@@ -86,48 +86,8 @@ var catRepository = (function () {
 
 
 // ~~~~~~~~~~~~~~~~~~~~~
-// cat info modal functions
 // ~~~~~~~~~~~~~~~~~~~~~
 
-//create cat info modal
-function showCatModal (cat) {
-  var $catModalContainer = $("#modal-container");
-  $catModalContainer.addClass("is-visible");
-
-  //clear existing content
-  $($catModalContainer).empty();
-
-  // create modal div, assign class catmodal, append to catModalContainer
-  var $catModal = $('<div class="catmodal">');
-    $($catModalContainer).append($catModal);
-
-  // create closeModal button, assign class catmodal-close, append to catModal
-  var $closeButtonElement = $('<button class="catmodal-close">Close</button>');
-    $($catModal).append($closeButtonElement);
-    $closeButtonElement.on('click', function(event) {hideCatModal()
-    });
-
-  //create title element on modal, append to catModal
-  var $nameElement = $('<h1></h1>');
-  $nameElement.text(cat.name);
-  $($catModal).append($nameElement);
-
-  // create content element on modal, append to catModal
-loadImgUrl(cat.id).then((f)=> {
-  var $infoElement = $('<p></p>');
-  $infoElement.append(`<b>Origin: </b> ${cat.origin} <br> <b>Temperament</b> ${cat.temperament} <br> <b>Description: </b> ${cat.description} <br><img src="${f}" width="400">`);
-  $($catModal).append($infoElement);
-})
-}
-
-
-function hideCatModal () {
-  var $catModalContainer = $("#modal-container");
-  $catModalContainer.removeClass("is-visible");
-}
-
-
-//show cat info modal
 function showDetails(cat) {
 catRepository
   .loadList(cat)
@@ -163,24 +123,10 @@ function searchFunction() {
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~
-// close modal NEED TO FIX
 // ~~~~~~~~~~~~~~~~~~~~~
 
-
-$('window').on("keydown", (e) => {
-  var $catModalContainer = $("#modal-container");
-  if (e.key === 'Escape' && $catModalContainer.classList.contains("is-visible")){
-    hideCatModal();
-  }
 });
 
-$('#modal-container').on("click", (e) => {
-  var target = e.target;
-  var $catModalContainer = $("#modal-container");
-  if (target === $catModalContainer) {
-    hideCatModal();
-  }
-});
 
 // ~~~~~~~~~~~~~~~~~~~~~
 // public functions
