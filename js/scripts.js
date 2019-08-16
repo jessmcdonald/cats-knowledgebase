@@ -68,19 +68,16 @@ var catRepository = (function () {
   function addListItem(cat) {
 
     //select already existing element
-    var $newList = $(".cat-list");
-
-    //create li, append listItem to newList
-    var $listItem = $('<li></li>');
-      $($newList).append($listItem);
+    var $newList = $(".list-group");
 
     //create button with class name-button, add cat.name to button text, append button to li
-    var $button = $('<button type="button" class="btn btn-primary"></button>');
+    var $button = $('<button type="button" class="btn btn-primary list-group-item" data-toggle="modal" data-target="#modalContainer"></button>');
       $button.text(cat.name);
-      $($listItem).append($button);
+      $($newList).append($button);
 
     //add event listener to listItem
-    $button.on('click', function(event) {showDetails(cat);
+    $button.on('click', function(event) {
+      showDetails(cat);
     });
   }
 
