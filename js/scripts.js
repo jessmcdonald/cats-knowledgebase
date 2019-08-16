@@ -182,19 +182,16 @@ $('#modal-container').on("click", (e) => {
   }
 });
 
+// ~~~~~~~~~~~~~~~~~~~~~
+// public functions
+// ~~~~~~~~~~~~~~~~~~~~~
 
-  //public functions
   return {
-    add: add,
     getAll: getAll,
     addListItem: addListItem,
     loadList: loadList,
-    searchFunction: searchFunction,
-    loadImgUrl: loadImgUrl,
-    showDetails: showDetails,
-    showCatModal: showCatModal,
-    hideCatModal: hideCatModal,
   };
+
 })();
 
 
