@@ -96,35 +96,19 @@ catRepository
 });
 }
 
-// ~~~~~~~~~~~~~~~~~~~~~
-// search functions
-// ~~~~~~~~~~~~~~~~~~~~~
-
-//search
-function searchFunction() {
-  // Declare variables
-  var input, filter, ul, li, a, i, txtValue;
-  input = document.getElementById("catBreedSearchInput");
-  filter = input.value.toUpperCase();
-  ul = document.querySelector(".cat-list");
-  li = ul.getElementsByTagName("li");
-
-
-  // Loop through all list items, and hide those who don't match the search query
-  for (i = 0; i < li.length; i++) {
-    a = li[i].getElementsByTagName("button")[0];
-    txtValue = a.textContent || a.innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = "";
-    } else {
-      li[i].style.display = "none";
-    }
-  }
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~
+// search function
 // ~~~~~~~~~~~~~~~~~~~~~
 
+$(document).ready(function(){
+  $("#catBreedSearchInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#listDiv *").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 });
 
 
