@@ -83,16 +83,22 @@ var catRepository = (function () {
 
 
 // ~~~~~~~~~~~~~~~~~~~~~
+// update cat modal info
 // ~~~~~~~~~~~~~~~~~~~~~
 
 function showDetails(cat) {
-catRepository
-  .loadList(cat)
-  .then(function () {
-    showCatModal(cat);
-});
-}
+  $(document).on('click', '.list-group-item', function() {
+    loadImgUrl(cat.id).then((f)=> {
+      var $nameElement = (`<h3>${cat.name}</h3>`);
+      var $detailsElement = $(`<b>Origin: </b> ${cat.origin} <br> <b>Temperament</b> ${cat.temperament} <br> <b>Description: </b> ${cat.description} <br>`);
+      var $imageElement = $(`<img src="${f}" width="400">`);
 
+      $('#cat-breed-name').html($nameElement);
+      $('#cat-breed-details').html($detailsElement);
+      $('#cat-breed-image').html($imageElement)
+      $('#modal').modal('show');
+    })
+  });
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~
